@@ -1,12 +1,24 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-
-import React from "react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 
 export default function Register() {
+	const router = useRouter();
+
+	useEffect(() => {
+		const today = new Date();
+		const isDDay = today.getMonth() === 2 && today.getDate() === 1;
+
+		if (!isDDay) {
+			router.replace("/counter");
+		}
+	}, [router]);
 	return (
 		<div className="w-full max-w-3xl mx-auto my-20">
 			<div className="rounded-md shadow-md p-6">
