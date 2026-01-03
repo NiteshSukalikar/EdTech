@@ -19,7 +19,7 @@ export default function Hero() {
 					</p>
 				</div>
 
-				<h1 className="text-4xl md:text-6xl font-semibold text-white md:px-96 py-3">
+				<h1 className="text-5xl md:text-6xl font-semibold text-white md:px-96 py-3">
 					Transform Your <span className="text-[#1F2937]">Student Journey</span>
 				</h1>
 
@@ -40,7 +40,7 @@ export default function Hero() {
 					</Button>
 				</div>
 
-				<div className="flex items-center space-x-10  font-medium mt-5">
+				<div className="hidden md:flex items-center space-x-10 font-medium mt-5">
 					<p className="flex items-center space-x-2">
 						<GoDotFill />
 						Trusted by 500+ institutions
