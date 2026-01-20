@@ -94,11 +94,11 @@ export default function Login() {
   });
 
   return (
-    <AuthLayout imageSrc="/images/auth_image.png">
+    <AuthLayout imageSrc="static/images/auth_image.png">
       {/* HEADER */}
       <div className="text-center mb-6">
         <Image
-          src="/images/logo 1.svg"
+          src="static/images/logo 1.svg"
           alt="Logo"
           width={50}
           height={20}

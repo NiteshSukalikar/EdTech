@@ -33,7 +33,7 @@ const slides = [
 		title: "Attract more than 50 Networking & Cybersecurity JOB-ROLES.",
 		description:
 			"This 12 Months skills-ses training attract more than 50 Networking & Cybersecurity JOB_ROLES.",
-		image: "/images/slide4img.svg",
+		image: "static/images/slide4img.svg",
 	},
 ];
 
