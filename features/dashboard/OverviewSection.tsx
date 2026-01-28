@@ -150,7 +150,7 @@ export function OverviewSection({ isAdmin }: { isAdmin: boolean }) {
       </div>
 
       {/* Error State for Metrics (Admin Only) */}
-      {isAdmin && metricsError && (
+      {/* {isAdmin && metricsError && (
         <div className="rounded-lg border border-red-200 bg-red-50 p-4 flex gap-3">
           <AlertTriangle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
           <div>
@@ -158,7 +158,7 @@ export function OverviewSection({ isAdmin }: { isAdmin: boolean }) {
             <p className="text-sm text-red-700 mt-1">{metricsError}</p>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Main Content Area */}
       <div className="grid grid-cols-1 lg:grid-cols-[6fr_4fr] gap-4 sm:gap-6 max-h-[calc(100vh-280px)]">       
@@ -475,9 +475,9 @@ export function OverviewSection({ isAdmin }: { isAdmin: boolean }) {
               <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
               <div className="flex-1">
                 <p className="text-sm font-medium text-slate-800">
-                  Completed Advanced React Course
+                  Enrollment started for <span className="font-bold">Networking & Cybersecurity certification</span>
                 </p>
-                <p className="text-xs text-slate-500">2 hours ago</p>
+                <p className="text-xs text-slate-500">1 hours ago</p>
               </div>
               <Badge
                 variant="default"
@@ -485,67 +485,7 @@ export function OverviewSection({ isAdmin }: { isAdmin: boolean }) {
               >
                 Completed
               </Badge>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-slate-800">
-                  Enrolled in Node.js Masterclass
-                </p>
-                <p className="text-xs text-slate-500">1 day ago</p>
-              </div>
-              <Badge
-                variant="outline"
-                className="border-blue-200 text-blue-700 hover:bg-blue-50"
-              >
-                In Progress
-              </Badge>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-slate-800">
-                  Submitted Assignment #3
-                </p>
-                <p className="text-xs text-slate-500">3 days ago</p>
-              </div>
-              <Badge
-                variant="default"
-                className="bg-green-100 text-green-700 hover:bg-green-200"
-              >
-                Graded
-              </Badge>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-slate-800">
-                  Joined Study Group
-                </p>
-                <p className="text-xs text-slate-500">5 days ago</p>
-              </div>
-              <Badge
-                variant="outline"
-                className="border-purple-200 text-purple-700 hover:bg-purple-50"
-              >
-                Active
-              </Badge>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-slate-800">
-                  Certificate Earned
-                </p>
-                <p className="text-xs text-slate-500">1 week ago</p>
-              </div>
-              <Badge
-                variant="default"
-                className="bg-orange-100 text-orange-700 hover:bg-orange-200"
-              >
-                Achievement
-              </Badge>
-            </div>
+            </div>            
           </CardContent>
         </Card>
       </div>

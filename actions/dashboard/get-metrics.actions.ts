@@ -47,10 +47,37 @@ export async function getDashboardMetricsAction(): Promise<GetDashboardMetricsRe
     const result = await fetchDashboardMetrics(token);
 
     if (!result.success) {
+      console.error("Metrics fetch failed:", result.error);
+      
+      // Return empty metrics instead of error
+      // This allows UI to gracefully show "NO records" instead of error message
       return {
-        success: false,
-        error: result.error,
-        status: 500,
+        success: true,
+        data: {
+          totalEnrollees: {
+            value: 0,
+            change: 0,
+            trend: "stable" as const,
+          },
+          totalRevenue: {
+            value: 0,
+            currency: "NGN",
+            change: 0,
+            trend: "stable" as const,
+          },
+          completedPayments: {
+            value: 0,
+            percentage: 0,
+            change: 0,
+            trend: "stable" as const,
+          },
+          inProgress: {
+            value: 0,
+            percentage: 0,
+            change: 0,
+            trend: "stable" as const,
+          },
+        },
       };
     }
 
