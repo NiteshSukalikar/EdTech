@@ -114,10 +114,11 @@ export function OverviewSection({ isAdmin }: { isAdmin: boolean }) {
    * Build stats array based on user role
    * Using reusable functions from stats config
    * Makes adding new metrics simple and type-safe
+   * Note: buildAdminStats() handles null/undefined metrics gracefully
    */
   const buildStats = (): StatValue[] => {
-    if (isAdmin && metrics) {
-      return buildAdminStats(metrics);
+    if (isAdmin) {
+      return buildAdminStats(metrics!);
     }
 
     if (!isAdmin) {

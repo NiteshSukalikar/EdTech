@@ -123,40 +123,52 @@ export const USER_STATS_CONFIG: Array<StatConfig & { defaultValue: string }> = [
 /**
  * Build admin stats from metrics data
  * Extracted from component for reusability and testability
+ * Handles missing or null data gracefully with fallback values
  */
 export function buildAdminStats(metrics: DashboardTopMetrics): StatValue[] {
+  // Safe access with fallback values
+  const totalEnrollees = metrics?.totalEnrollees?.value ?? 0;
+  const totalRevenue = metrics?.totalRevenue?.value ?? 0;
+  const revenueCurrency = metrics?.totalRevenue?.currency ?? "NGN";
+  const completedValue = metrics?.completedPayments?.value ?? 0;
+  const completedPercentage = metrics?.completedPayments?.percentage ?? 0;
+  const inProgressValue = metrics?.inProgress?.value ?? 0;
+  const inProgressPercentage = metrics?.inProgress?.percentage ?? 0;
+
   return [
     {
       title: "Total Enrollees",
-      value: metrics.totalEnrollees.value.toLocaleString(),
+      value: totalEnrollees > 0 ? totalEnrollees.toLocaleString() : "NO records",
       icon: Users,
-      change: metrics.totalEnrollees.change,
-      trend: metrics.totalEnrollees.trend,
+      change: metrics?.totalEnrollees?.change ?? 0,
+      trend: metrics?.totalEnrollees?.trend ?? "stable",
     },
     {
       title: "Revenue",
-      value: formatMetricValue(
-        metrics.totalRevenue.value,
-        "currency",
-        metrics.totalRevenue.currency
-      ),
+      value: totalRevenue > 0 
+        ? formatMetricValue(totalRevenue, "currency", revenueCurrency)
+        : "₦0",
       icon: DollarSign,
-      change: metrics.totalRevenue.change,
-      trend: metrics.totalRevenue.trend,
+      change: metrics?.totalRevenue?.change ?? 0,
+      trend: metrics?.totalRevenue?.trend ?? "stable",
     },
     {
       title: "Completed",
-      value: `${metrics.completedPayments.value} (${metrics.completedPayments.percentage.toFixed(1)}%)`,
+      value: completedValue > 0 
+        ? `${completedValue} (${completedPercentage.toFixed(1)}%)`
+        : "0 (0.0%)",
       icon: BookOpen,
-      change: metrics.completedPayments.change,
-      trend: metrics.completedPayments.trend,
+      change: metrics?.completedPayments?.change ?? 0,
+      trend: metrics?.completedPayments?.trend ?? "stable",
     },
     {
       title: "In Progress",
-      value: `${metrics.inProgress.value} (${metrics.inProgress.percentage.toFixed(1)}%)`,
+      value: inProgressValue > 0
+        ? `${inProgressValue} (${inProgressPercentage.toFixed(1)}%)`
+        : "0 (0.0%)",
       icon: TrendingUp,
-      change: metrics.inProgress.change,
-      trend: metrics.inProgress.trend,
+      change: metrics?.inProgress?.change ?? 0,
+      trend: metrics?.inProgress?.trend ?? "stable",
     },
   ];
 }
