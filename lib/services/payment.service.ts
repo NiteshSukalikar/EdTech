@@ -85,7 +85,7 @@ export async function fetchPaymentsByEnrollment(
 
    if (!res.ok) {
      const errorText = await res.text();
-     console.error("Strapi API Error:", res.status, errorText);
+     console.warn("Strapi API Error:", res.status, errorText);
      // Return empty array instead of throwing error for 403 and other fetch failures
      if (res.status === 403) {
        console.warn("Access denied fetching payments - returning empty list");
@@ -137,7 +137,7 @@ export async function fetchAllPayments(token: string): Promise<PaymentData[]> {
 
    if (!res.ok) {
      const errorText = await res.text();
-     console.error("Strapi API Error:", res.status, errorText);
+     console.warn("Strapi API Error:", res.status, errorText);
      // Return empty array instead of throwing error for 403 and other fetch failures
      if (res.status === 403) {
        console.warn("Access denied fetching all payments - returning empty list");
@@ -192,7 +192,7 @@ export async function fetchPaymentsByUser(
 
    if (!res.ok) {
      const errorText = await res.text();
-     console.error("Strapi API Error:", res.status, errorText);
+     console.warn("Strapi API Error:", res.status, errorText);
      // Return empty array instead of throwing error for 403 and other fetch failures
      if (res.status === 403) {
        console.warn("Access denied fetching user payments - returning empty list");
