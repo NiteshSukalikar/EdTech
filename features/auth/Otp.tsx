@@ -33,7 +33,7 @@ export default function ResetPassword() {
   const validate = () => {
     const e: Record<string, string> = {};
     const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,15}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_]).{8,15}$/;
 
     if (!form.code) e.code = "Reset code is required";
 
@@ -96,15 +96,16 @@ export default function ResetPassword() {
   });
 
   return (
-    <AuthLayout imageSrc="s/images/auth_image.png">
+    <AuthLayout imageSrc="/static/images/auth_image.png">
       {/* HEADER */}
       <div className="text-center mb-6">
         <Image
-          src="static/images/logo 1.svg"
+          src="/static/images/logo1.svg"
           alt="Logo"
           width={50}
           height={20}
           className="mx-auto mb-2"
+          unoptimized
         />
         <h1 className="text-2xl font-bold text-black">
           Reset Password

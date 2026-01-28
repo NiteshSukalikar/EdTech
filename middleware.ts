@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const PUBLIC_ROUTES = [
+  "/",
+  "/counter",
   "/login",
   "/register",
   "/forgetPassword"
@@ -46,11 +48,11 @@ export function middleware(req: NextRequest) {
    * 🔐 CASE 1:
    * Not logged in & trying protected page
    */
-  // if (!authToken && !isPublic) {
-  //   const loginUrl = new URL("/login", req.url);
-  //   loginUrl.searchParams.set("redirect", pathname);
-  //   return NextResponse.redirect(loginUrl);
-  // }
+  if (!authToken && !isPublic) {
+    const loginUrl = new URL("/login", req.url);
+    loginUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(loginUrl);
+  }
 
   /**
    * 🔐 CASE 2:
@@ -71,6 +73,6 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next|favicon.ico|images).*)",
+    "/((?!api|_next|favicon.ico|static|images).*)",
   ],
 };

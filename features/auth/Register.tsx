@@ -14,169 +14,171 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 export default function Register() {
-  const router = useRouter();
-  const { showToast } = useToast();
-  const [isPending, startTransition] = useTransition();
+	const router = useRouter();
+	const { showToast } = useToast();	
 
-  const [form, setForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    agree: false,
-  });
+	const [isPending, startTransition] = useTransition();
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [touched, setTouched] = useState<Record<string, boolean>>({});
+	const [form, setForm] = useState({
+		username: "",
+		email: "",
+		password: "",
+		confirmPassword: "",
+		agree: false,
+	});
 
-  const validate = () => {
-    const e: Record<string, string> = {};
-    const usernameRegex = /^(?!_)(?!.*__)[A-Za-z0-9_]{3,15}(?<!_)$/;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_]).{8,15}$/;
+	const [errors, setErrors] = useState<Record<string, string>>({});
+	const [touched, setTouched] = useState<Record<string, boolean>>({});
 
-    if (!usernameRegex.test(form.username))
-      e.username = "3–15 chars, letters/numbers/_ only";
+	const validate = () => {
+		const e: Record<string, string> = {};
+		const usernameRegex = /^(?!_)(?!.*__)[A-Za-z0-9_]{3,15}(?<!_)$/;
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		const passwordRegex =
+			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_]).{8,15}$/;
 
-    if (!emailRegex.test(form.email)) e.email = "Enter a valid email address";
+		if (!usernameRegex.test(form.username))
+			e.username = "3–15 chars, letters/numbers/_ only";
 
-    if (!passwordRegex.test(form.password))
-      e.password = "Upper, lower, number & special char required";
+		if (!emailRegex.test(form.email)) e.email = "Enter a valid email address";
 
-    if (form.password !== form.confirmPassword)
-      e.confirmPassword = "Passwords do not match";
+		if (!passwordRegex.test(form.password))
+			e.password = "Upper, lower, number & special char required";
 
-    if (!form.agree) e.agree = "You must accept the terms";
+		if (form.password !== form.confirmPassword)
+			e.confirmPassword = "Passwords do not match";
 
-    setErrors(e);
-    return Object.keys(e).length === 0;
-  };
+		if (!form.agree) e.agree = "You must accept the terms";
 
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
+		setErrors(e);
+		return Object.keys(e).length === 0;
+	};
 
-    if (!validate()) {
-      showToast({
-        type: "error",
-        title: "Invalid form",
-        description: "Please fix the highlighted fields.",
-      });
-      return;
-    }
+	const submit = (e: React.FormEvent) => {
+		e.preventDefault();
 
-    startTransition(async () => {
-      const result = await signupAction({
-        username: form.username,
-        email: form.email,
-        password: form.password,
-        agree: form.agree,
-      });
+		if (!validate()) {
+			showToast({
+				type: "error",
+				title: "Invalid form",
+				description: "Please fix the highlighted fields.",
+			});
+			return;
+		}
 
-      if (!result.success) {
-        showToast({
-          type: "error",
-          title: "Signup failed",
-          description: result.message,
-        });
-        return;
-      }
+		startTransition(async () => {
+			const result = await signupAction({
+				username: form.username,
+				email: form.email,
+				password: form.password,
+				agree: form.agree,
+			});
 
-      showToast({
-        type: "success",
-        title: "Account created",
-        description: "You can now log in.",
-      });
+			if (!result.success) {
+				showToast({
+					type: "error",
+					title: "Signup failed",
+					description: result.message,
+				});
+				return;
+			}
 
-      router.push("/login");
-    });
-  };
+			showToast({
+				type: "success",
+				title: "Account created",
+				description: "You can now log in.",
+			});
 
-  const bind = (name: string) => ({
-    value: (form as any)[name],
-    onChange: (e: any) => setForm({ ...form, [name]: e.target?.value ?? e }),
-    onBlur: () => setTouched({ ...touched, [name]: true }),
-  });
+			router.push("/login");
+		});
+	};
 
-  return (
-    <AuthLayout imageSrc="static/images/auth_image.png">
-      <div className="text-center mb-6">
-        <Image
-          src="static/images/logo 1.svg"
-          alt="Logo"
-          width={50}
-          height={20}
-          className="mx-auto mb-2"
-        />
-        <h1 className="text-3xl font-bold text-black">Welcome</h1>
-        <p className="text-xs font-semibold text-gray-600">
-          Empowering Students in Network & Cybersecurity
-        </p>
-      </div>
+	const bind = (name: string) => ({
+		value: (form as any)[name],
+		onChange: (e: any) => setForm({ ...form, [name]: e.target?.value ?? e }),
+		onBlur: () => setTouched({ ...touched, [name]: true }),
+	});
 
-      <form onSubmit={submit} className="space-y-4">
-        <FormField
-          label="Username"
-          error={touched.username ? errors.username : undefined}
-        >
-          <Input {...bind("username")} />
-        </FormField>
+	return (
+		<AuthLayout imageSrc="/static/images/auth_image.png">
+			<div className="text-center mb-6">
+				<Image
+					src="/static/images/logo1.svg"
+					alt="Logo"
+					width={50}
+					height={20}
+					className="mx-auto mb-2"
+					unoptimized
+				/>
+				<h1 className="text-3xl font-bold text-black">Welcome</h1>
+				<p className="text-xs font-semibold text-gray-600">
+					Empowering Students in Network & Cybersecurity
+				</p>
+			</div>
 
-        <FormField
-          label="Email"
-          error={touched.email ? errors.email : undefined}
-        >
-          <Input type="email" {...bind("email")} />
-        </FormField>
+			<form onSubmit={submit} className="space-y-4">
+				<FormField
+					label="Username"
+					error={touched.username ? errors.username : undefined}
+				>
+					<Input {...bind("username")} />
+				</FormField>
 
-        <FormField
-          label="Password"
-          error={touched.password ? errors.password : undefined}
-        >
-          <PasswordInput
-            {...bind("password")}
-            placeholder="Enter your password"
-          />
-        </FormField>
+				<FormField
+					label="Email"
+					error={touched.email ? errors.email : undefined}
+				>
+					<Input type="email" {...bind("email")} />
+				</FormField>
 
-        <FormField
-          label="Confirm Password"
-          error={touched.confirmPassword ? errors.confirmPassword : undefined}
-        >
-          <PasswordInput
-            {...bind("confirmPassword")}
-            placeholder="Confirm your password"
-          />
-        </FormField>
+				<FormField
+					label="Password"
+					error={touched.password ? errors.password : undefined}
+				>
+					<PasswordInput
+						{...bind("password")}
+						placeholder="Enter your password"
+					/>
+				</FormField>
 
-        <div className="flex items-center gap-2">
-          <Checkbox
-            checked={form.agree}
-            onCheckedChange={(v) => setForm({ ...form, agree: !!v })}
-          />
-          <span className="text-sm">
-            I agree to the{" "}
-            <a href="#" className="text-teal-500 font-medium">
-              Terms of Service
-            </a>
-          </span>
-        </div>
+				<FormField
+					label="Confirm Password"
+					error={touched.confirmPassword ? errors.confirmPassword : undefined}
+				>
+					<PasswordInput
+						{...bind("confirmPassword")}
+						placeholder="Confirm your password"
+					/>
+				</FormField>
 
-        {errors.agree && (
-          <p className="text-xs text-red-600">⚠ {errors.agree}</p>
-        )}
+				<div className="flex items-center gap-2">
+					<Checkbox
+						checked={form.agree}
+						onCheckedChange={(v) => setForm({ ...form, agree: !!v })}
+					/>
+					<span className="text-sm">
+						I agree to the{" "}
+						<a href="#" className="text-teal-500 font-medium">
+							Terms of Service
+						</a>
+					</span>
+				</div>
 
-        <Button disabled={isPending} className="w-full">
-          {isPending ? "Creating account..." : "Sign up"}
-        </Button>
-      </form>
+				{errors.agree && (
+					<p className="text-xs text-red-600">⚠ {errors.agree}</p>
+				)}
 
-      <p className="text-center text-sm mt-4">
-        Already have an account?{" "}
-        <Link href="/login" className="text-teal-500 font-medium">
-          Login here
-        </Link>
-      </p>
-    </AuthLayout>
-  );
+				<Button disabled={isPending} className="w-full">
+					{isPending ? "Creating account..." : "Sign up"}
+				</Button>
+			</form>
+
+			<p className="text-center text-sm mt-4">
+				Already have an account?{" "}
+				<Link href="/login" className="text-teal-500 font-medium">
+					Login here
+				</Link>
+			</p>
+		</AuthLayout>
+	);
 }

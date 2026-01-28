@@ -37,9 +37,7 @@
       "type": "enumeration",
       "enum": [
         "Delhi",
-        "Maharashtra",
-        "Karnataka",
-        "Tamil Nadu"
+        "Lagos"
       ]
     },
     "country": {
@@ -48,7 +46,8 @@
         "India",
         "USA",
         "Canada",
-        "UK"
+        "UK",
+        "Nigeria"
       ]
     },
     "preferredLanguage": {
@@ -93,6 +92,54 @@
     "isPaymentDone": {
       "type": "boolean",
       "default": false
+    },
+    "payments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::payment.payment",
+      "mappedBy": "enrollment"
+    },
+    "preferredNetwork": {
+      "type": "enumeration",
+      "enum": [
+        "Mtn",
+        "Glo",
+        "Airtel",
+        "mobile9"
+      ]
+    },
+    "yearOfStudy": {
+      "type": "integer"
+    },
+    "numberForData": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 10,
+      "required": true
+    },
+    "netacadId": {
+      "type": "string"
+    },
+    "batchName": {
+      "type": "string",
+      "required": false
+    },
+    "selectedPlan": {
+      "type": "enumeration",
+      "enum": ["gold", "silver", "bronze"],
+      "required": false
+    },
+    "planName": {
+      "type": "string",
+      "required": false
+    },
+    "planAmount": {
+      "type": "decimal",
+      "required": false
+    },
+    "planDiscount": {
+      "type": "integer",
+      "required": false
     }
   }
 }

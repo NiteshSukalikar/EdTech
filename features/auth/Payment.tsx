@@ -16,10 +16,17 @@ type Plan = {
   currency: string;
   description: string;
   features: string[];
+  discount?: number;
+  price?: string;
+  bg?: string;
 };
 
-export default function PaymentPage() {
-  const [selectedPlan, setSelectedPlan] = useState<Plan>(PAYMENT_PLANS.basic);
+type Props = {
+  userEmail: string;
+};
+
+export default function PaymentPage({ userEmail }: Props) {
+  const [selectedPlan, setSelectedPlan] = useState<Plan>(PAYMENT_PLANS.gold);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -43,10 +50,11 @@ export default function PaymentPage() {
   // Paystack configuration
   const config = {
     reference: generatePaymentReference(),
-    email: "Test@yopmail.com",
+    email: userEmail,
     amount: selectedPlan.amount, // Amount in kobo
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
     currency: "NGN",
+    subaccount : "ACCT_xtlrfkipcz3pp2p",
     channels: ["card"],
   };
 
@@ -73,6 +81,7 @@ export default function PaymentPage() {
           planName: selectedPlan.name,
           amount: selectedPlan.amount.toString(),
           currency: selectedPlan.currency,
+          planDiscount: selectedPlan.discount?.toString() || "0",
         });
         router.replace(`/payment/verify?${params.toString()}`);
       },
@@ -126,7 +135,7 @@ export default function PaymentPage() {
                   ${
                     isActive
                       ? "bg-white ring-4 ring-[#51A8B1]/40 shadow-2xl"
-                      : "bg-[#f4fbfd]/90 hover:bg-white shadow-lg"
+                      : plan.bg ? `${plan.bg} hover:opacity-90 shadow-lg` : "bg-[#f4fbfd]/90 hover:bg-white shadow-lg"
                   }
                 `}
               >
