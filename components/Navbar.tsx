@@ -15,16 +15,17 @@ export default function Navbar() {
 					<Image
 						src="static/images/sec logo.svg"
 						alt="Logo"
-						width={50}
+						width={70}
 						height={10}
 					/>
-					<Image
-						src="static/images/skillsncert.svg"
-						alt="Logo"
-						width={150}
-						height={30}
-					/>
-					{/* <h3 className="text-xl font-semibold">CE-EMS</h3> */}
+					<Link href={"/"}>
+						<Image
+							src="static/images/skillsncert.svg"
+							alt="Logo"
+							width={200}
+							height={50}
+						/>
+					</Link>
 				</div>
 
 				<div className="hidden md:flex items-center space-x-10">
@@ -77,11 +78,11 @@ export default function Navbar() {
 						</li>
 						<li>
 							<Link
-								href="/login"
+								href="/register"
 								className="inline-block bg-[#51A8B1] text-white text-base font-semibold px-4 py-2 rounded-md"
 								onClick={() => setOpen(false)}
 							>
-								Login
+								Register
 							</Link>
 						</li>
 					</ul>
